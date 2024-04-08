@@ -1,0 +1,21 @@
+version: '3.7'
+
+services:
+  testwebapi:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80;https://+:433
+      - ConnectionStrings__ApplicationConnection=Server=host.docker.internal;Database=Zed2AppTestDB;User=AppLogin;Password=AppPass123;TrustServerCertificate=True;persist security info=True;MultipleActiveResultSets=true;
+      - Redis__Hosts__0__Host=redis
+    ports:
+      - "8082:80"
+      - "8083:433"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSec rets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+
+  redis:
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    ports:
+      - "6379:6379"

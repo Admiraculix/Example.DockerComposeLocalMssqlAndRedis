@@ -1,0 +1,21 @@
+version: '3.7'
+
+services:
+  redis:
+    image: 'bitnami/redis:latest'
+    container_name: redis
+    hostname: redis
+    networks:
+        - app-tier
+
+  testwebapi:
+    image: ${DOCKER_REGISTRY-}testwebapi
+    build:
+      context: .
+      dockerfile: TestWebApi/Dockerfile
+    networks:
+        - app-tier
+
+networks:
+  app-tier:
+    driver: bridge
